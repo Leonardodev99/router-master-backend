@@ -1,0 +1,25 @@
+{
+  "name": "router-master-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "globals": "^15.15.0",
+    "nodemon": "^3.1.9",
+    "sucrase": "^3.35.0"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
