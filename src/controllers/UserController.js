@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Photo from '../models/Photo';
 
 
 class UserController {
@@ -29,6 +30,12 @@ class UserController {
 
       const user= await User.findByPk(req.userId,{
         attributes: ['username', 'email', 'phone'],
+        include: {
+          model: Photo,
+          as: 'photos',
+          attributes:['url', 'filename']
+        },
+
       });
       if (!user) {
         return res.status(404).json({
