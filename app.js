@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -20,6 +21,8 @@ class App {
   middleware() {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
+    // Servindo a pasta "uploads" como pública
+    this.app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
   }
 
   routes() {
