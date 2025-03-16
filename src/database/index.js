@@ -2,8 +2,9 @@ import { Sequelize } from "sequelize";
 import databaseConfig from '../config/database';
 import User from '../models/User';
 import Photo from "../models/Photo";
+import Walk from "../models/Walk";
 
-const models = [User, Photo];
+const models = [User, Photo, Walk];
 
 
   this.connection = new Sequelize(databaseConfig);
