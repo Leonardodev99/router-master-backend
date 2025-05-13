@@ -40,8 +40,6 @@ class WalkController {
   }
 
 
-
-
   // Cadastrar uma nova caminhada
   async store(req, res) {
     try {

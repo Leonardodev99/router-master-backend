@@ -72,9 +72,6 @@ class UserController {
       });
     }
   }
-
-
-
     //Destroy
     async delete (req, res) {
       try {

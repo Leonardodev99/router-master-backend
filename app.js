@@ -6,6 +6,9 @@ dotenv.config();
 import './src/database';
 
 import express from 'express';
+import cors from 'cors';
+
+
 import homeRoutes from './src/routes/homeRoutes';
 import userRoutes from './src/routes/userRoutes';
 import tokenRoutes from './src/routes/tokenRoutes';
@@ -23,6 +26,12 @@ class App {
   }
 
   middleware() {
+    const corsOptions = {
+      origin: ['http://localhost:3002'],
+      methods: 'GET,POST,PUT,DELETE',
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    };
+    this.app.use(cors(corsOptions));
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     // Servindo a pasta "uploads" como pública
