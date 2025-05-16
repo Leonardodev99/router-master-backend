@@ -60,11 +60,31 @@ class UserController {
         });
       }
 
-      await user.update(req.body);
+      const { username, email, phone } = req.body;
 
-      const { username, email, phone } = user;
+      await user.update({ username, email, phone });
 
-      return res.json({ username, email, phone });
+      if (req.file) {
+        const { filename } = req.file;
+
+        // Aqui você pode criar uma nova Photo ou atualizar a existente
+        await Photo.create({
+          user_id: user.id,
+          filename,
+          url: `http://localhost:3005/uploads/images/${filename}`,
+        });
+      }
+
+      const updatedUser = await User.findByPk(req.userId, {
+        attributes: ['username', 'email', 'phone'],
+        include: {
+          model: Photo,
+          as: 'photos',
+          attributes: ['url', 'filename'],
+        },
+      });
+
+      return res.json(updatedUser);
 
     }catch (e) {
       return res.status(400).json({
