@@ -4,8 +4,9 @@ import User from '../models/User';
 import Photo from "../models/Photo";
 import Walk from "../models/Walk";
 import Contact from "../models/Contact";
+import Message from "../models/Message"
 
-const models = [User, Photo, Walk, Contact];
+const models = [User, Photo, Walk, Contact, Message];
 
 
   this.connection = new Sequelize(databaseConfig);
