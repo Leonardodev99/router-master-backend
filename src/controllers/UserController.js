@@ -24,30 +24,37 @@ class UserController {
     }
   }
 
-  // Consultar perfil
-  async userprofile(req, res) {
-    try {
+// Consultar perfil
+async userprofile(req, res) {
+  try {
+    const user = await User.findByPk(req.userId, {
+      attributes: ['username', 'email', 'phone'],
+      include: {
+        model: Photo,
+        as: 'photos',
+        attributes: ['url', 'filename', 'created_at'], // precisa do created_at para saber a mais recente
+      },
+    });
 
-      const user= await User.findByPk(req.userId,{
-        attributes: ['username', 'email', 'phone'],
-        include: {
-          model: Photo,
-          as: 'photos',
-          attributes:['url', 'filename']
-        },
-
-      });
-      if (!user) {
-        return res.status(404).json({
-          errors: ['User not found'],
-        });
-      }
-      return res.json(user);
-    } catch (err) {
-      console.error(err);
-      res.status(400).json({ error: err.message });
+    if (!user) {
+      return res.status(404).json({ errors: ['User not found'] });
     }
+
+    // Ordena as fotos por data de criação DESC e pega a última
+    const lastPhoto = user.photos?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+
+    return res.json({
+      username: user.username,
+      email: user.email,
+      phone: user.phone,
+      photo: lastPhoto?.url || null,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: err.message });
   }
+}
+
 
   // Atualizar perfil
   async update(req, res) {
@@ -67,7 +74,7 @@ class UserController {
       if (req.file) {
         const { filename } = req.file;
 
-        // Aqui você pode criar uma nova Photo ou atualizar a existente
+        // criar uma nova Photo ou atualizar a existente
         await Photo.create({
           user_id: user.id,
           filename,

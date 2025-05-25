@@ -87,6 +87,7 @@ export default class User extends Model {
     return this;
   }
   static associate(models) {
-    this.belongsTo(models.Photo, { foreignKey: 'id', as: 'photos' });
-  }
+  this.hasMany(models.Photo, { foreignKey: 'user_id', as: 'photos' });
+}
+
 }
